@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>ACESSA+ | Uma escola acessível para todos</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Lexend:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --scale:1;
+  --bg:#F3F6F1; --surface:#FFFFFF; --surface-2:#E6EEE4; --ink:#14231A; --muted:#4A5E50;
+  --leaf:#2E7D4F; --leaf-ink:#FFFFFF; --line:#C9D8CC; --mark:#FFE58A; --mark-ink:#14231A;
+  --red:#E4473C; --yellow:#F2B620; --blue:#2F7FD8; --green:#43A955;
+  --radius-lg:28px; --radius:16px;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#0F1D15; --surface:#16291E; --surface-2:#1D3527; --ink:#EAF3EC; --muted:#A9C0B0;
+    --leaf:#5CC57F; --leaf-ink:#0F1D15; --line:#2A4636; --mark:#F2D35B; --mark-ink:#0F1D15;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0F1D15; --surface:#16291E; --surface-2:#1D3527; --ink:#EAF3EC; --muted:#A9C0B0;
+  --leaf:#5CC57F; --leaf-ink:#0F1D15; --line:#2A4636; --mark:#F2D35B; --mark-ink:#0F1D15;
+}
+:root[data-contrast="high"]{
+  --bg:#000; --surface:#000; --surface-2:#111; --ink:#FFF; --muted:#FFF;
+  --leaf:#FFE600; --leaf-ink:#000; --line:#FFF; --mark:#FFE600; --mark-ink:#000;
+}
+*,*::before,*::after{box-sizing:inherit}
+html{font-size:calc(106.25% * var(--scale));scroll-behavior:smooth;scroll-padding-top:calc(env(safe-area-inset-top,0px) + 5rem)}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Atkinson Hyperlegible",Verdana,system-ui,sans-serif;line-height:1.6;transition:background .3s,color .3s}
+h1,h2,h3{font-family:Lexend,"Atkinson Hyperlegible",Verdana,sans-serif;line-height:1.15;margin:0 0 .5em}
+h2{font-size:clamp(1.8rem,4vw,2.6rem);font-weight:800;letter-spacing:-.01em}
+h3{font-size:1.25rem;font-weight:600}
+p{margin:0 0 1em;max-width:65ch}
+img,svg{max-width:100%}
+a{color:var(--leaf)}
+button{font:inherit;cursor:pointer}
+:focus-visible{outline:4px solid var(--blue);outline-offset:3px;border-radius:8px}
+[data-contrast="high"] :focus-visible{outline-color:#FFE600}
+mark{background:var(--mark);color:var(--mark-ink);padding:0 .2em;border-radius:4px;font-weight:700}
+.wrap{max-width:1120px;margin:0 auto;padding:0 1.25rem}
+.skip{position:absolute;left:-999px;top:0;background:var(--leaf);color:var(--leaf-ink);padding:.8rem 1rem;z-index:100}
+.skip:focus{left:1rem;top:1rem}
+
+/* header */
+header.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:40;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.top .wrap{display:flex;align-items:center;justify-content:space-between;gap:1rem;min-height:4.25rem}
+.brand{display:flex;align-items:center;gap:.6rem;text-decoration:none;color:var(--ink);font-family:Lexend,sans-serif;font-weight:800;font-size:1.2rem}
+.brand svg{width:2.4rem;height:2.4rem}
+nav.main{display:flex;gap:.25rem;flex-wrap:wrap}
+nav.main a{color:var(--ink);text-decoration:none;padding:.5rem .8rem;border-radius:999px;font-weight:700;font-size:.95rem}
+nav.main a:hover{background:var(--surface-2)}
+.a11y-btn{display:inline-flex;align-items:center;gap:.5rem;background:var(--leaf);color:var(--leaf-ink);border:0;border-radius:999px;padding:.6rem 1rem;font-weight:700}
+@media (max-width:860px){nav.main{display:none}}
+
+/* hero */
+.hero{padding:clamp(2.5rem,7vw,5rem) 0 2rem}
+.hero-grid{display:grid;grid-template-columns:1.2fr .8fr;gap:2rem;align-items:center}
+.wordmark{font-family:Lexend,sans-serif;font-weight:800;font-size:clamp(3rem,11vw,7.5rem);line-height:.9;letter-spacing:-.03em;margin:0}
+.wordmark .plus{display:inline-block;color:var(--leaf)}
+.tag{font-family:Lexend,sans-serif;font-size:clamp(1.25rem,2.6vw,1.7rem);font-weight:600;margin:1rem 0 .5rem}
+.hero p.lead{color:var(--muted);font-size:1.1rem}
+.hero-logo{justify-self:center;width:min(100%,340px)}
+@media (max-width:760px){.hero-grid{grid-template-columns:1fr}.hero-logo{width:200px;order:-1}}
+
+/* big home buttons: puzzle tiles */
+.tiles{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin:2.5rem 0 1rem}
+.tile{--c:var(--blue);display:flex;flex-direction:column;align-items:flex-start;gap:.75rem;padding:1.4rem 1.25rem 1.25rem;min-height:9.5rem;text-decoration:none;color:#fff;background:var(--c);border-radius:var(--radius-lg);font-family:Lexend,sans-serif;font-weight:800;font-size:1.25rem;position:relative;overflow:hidden;border:3px solid transparent}
+.tile span.ico{font-size:2.2rem;line-height:1}
+.tile small{font-family:"Atkinson Hyperlegible",sans-serif;font-weight:400;font-size:.95rem;opacity:.95}
+.tile::after{content:"";position:absolute;right:-18px;top:50%;width:44px;height:44px;border-radius:50%;background:var(--bg);transform:translateY(-50%)}
+.tile:hover{transform:translateY(-3px)}
+.tile{transition:transform .15s}
+.tile.t1{--c:#C9382E}.tile.t2{--c:#B47F00}.tile.t3{--c:#2466B3}.tile.t4{--c:#2C8540}
+[data-contrast="high"] .tile{background:#000;border-color:#FFE600;color:#FFE600}
+@media (max-width:860px){.tiles{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:420px){.tiles{grid-template-columns:1fr}.tile{min-height:auto}}
+
+section.block{padding:clamp(3rem,7vw,5rem) 0;border-top:1px solid var(--line)}
+.section-intro{color:var(--muted);font-size:1.1rem;margin-bottom:2rem}
+
+/* subjects */
+.subj-tabs{display:flex;gap:.6rem;flex-wrap:wrap;margin-bottom:1.25rem}
+.subj-tab{display:flex;align-items:center;gap:.5rem;border:2px solid var(--line);background:var(--surface);color:var(--ink);padding:.7rem 1.1rem;border-radius:999px;font-weight:700}
+.subj-tab[aria-selected="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.reader{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius-lg);display:grid;grid-template-columns:1fr 280px;overflow:hidden}
+.reader-body{padding:clamp(1.25rem,4vw,2.5rem)}
+.reader-art{background:var(--surface-2);display:flex;align-items:center;justify-content:center;padding:1.5rem}
+.reader-art svg{width:100%;max-width:230px;height:auto}
+.reader h3{font-size:1.6rem}
+.reader .topic{color:var(--muted);font-weight:700;margin-bottom:.5rem}
+.reader-text{font-size:1.15rem}
+.toolbar{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:1.5rem;padding-top:1.25rem;border-top:1px dashed var(--line)}
+.tbtn{display:inline-flex;align-items:center;gap:.45rem;border:2px solid var(--ink);background:transparent;color:var(--ink);padding:.55rem 1rem;border-radius:12px;font-weight:700}
+.tbtn.primary{background:var(--leaf);border-color:var(--leaf);color:var(--leaf-ink)}
+.tbtn[aria-pressed="true"]{background:var(--ink);color:var(--bg)}
+.words{display:flex;flex-wrap:wrap;gap:.4rem;margin:.25rem 0 0;padding:0;list-style:none}
+.words li{background:var(--surface-2);border-radius:8px;padding:.2rem .6rem;font-weight:700;font-size:.95rem}
+@media (max-width:760px){.reader{grid-template-columns:1fr}.reader-art{order:-1;padding:1rem}.reader-art svg{max-width:160px}}
+.v-simple{display:none}
+body.simple .v-full{display:none} body.simple .v-simple{display:block}
+
+/* timer */
+.timer-grid{display:grid;grid-template-columns:auto 1fr;gap:clamp(1.5rem,5vw,4rem);align-items:center}
+.ring{position:relative;width:min(78vw,320px);aspect-ratio:1}
+.ring svg{width:100%;height:100%;transform:rotate(-90deg)}
+.ring circle{fill:none;stroke-width:14}
+.ring .track{stroke:var(--surface-2)}
+.ring .prog{stroke:var(--leaf);stroke-linecap:round;transition:stroke-dashoffset .5s linear}
+.ring .time{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;font-family:Lexend,sans-serif}
+.ring .time strong{font-size:clamp(3rem,10vw,4.5rem);font-weight:800;font-variant-numeric:tabular-nums;letter-spacing:-.02em}
+.ring .time span{color:var(--muted);font-weight:700}
+.presets{display:flex;gap:.5rem;flex-wrap:wrap;margin:1rem 0}
+.controls{display:flex;gap:.6rem;flex-wrap:wrap}
+.controls .tbtn{font-size:1.1rem;padding:.8rem 1.3rem}
+.pause-msg{display:none;margin-top:1.25rem;background:var(--surface-2);border-left:6px solid var(--green);padding:1rem 1.25rem;border-radius:12px;font-family:Lexend,sans-serif;font-weight:800;font-size:1.4rem}
+.pause-msg.show{display:block}
+@media (max-width:760px){.timer-grid{grid-template-columns:1fr;justify-items:center;text-align:center}.presets,.controls{justify-content:center}}
+
+/* needs */
+.needs{display:grid;grid-template-columns:repeat(2,1fr);gap:1rem}
+.need{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:1.5rem;display:flex;flex-direction:column;border-top:8px solid var(--c)}
+.need h3{display:flex;align-items:center;gap:.5rem}
+.need ul{margin:0 0 1.25rem;padding-left:1.2rem}
+.need li{margin-bottom:.3rem}
+.need .tbtn{margin-top:auto;align-self:flex-start}
+@media (max-width:700px){.needs{grid-template-columns:1fr}}
+
+/* project */
+.project{display:grid;grid-template-columns:1fr 1fr;gap:2rem}
+.pillars{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-top:2rem}
+.pillar{text-align:center;padding:1.25rem .75rem;background:var(--surface);border:1px solid var(--line);border-radius:var(--radius)}
+.pillar .ico{font-size:2rem}
+.pillar strong{display:block;font-family:Lexend,sans-serif;margin:.4rem 0 .2rem}
+.pillar small{color:var(--muted)}
+@media (max-width:760px){.project{grid-template-columns:1fr}.pillars{grid-template-columns:repeat(2,1fr)}}
+
+footer{padding:3rem 0 4rem;border-top:1px solid var(--line);text-align:center}
+footer .motto{font-family:Lexend,sans-serif;font-size:clamp(1.3rem,3vw,1.8rem);font-weight:600;margin:0 auto 1rem;max-width:30ch}
+footer small{color:var(--muted)}
+
+/* accessibility panel */
+.panel-back{position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:60;display:none}
+.panel{position:fixed;top:0;right:0;height:100%;width:min(100%,400px);background:var(--surface);color:var(--ink);z-index:61;transform:translateX(105%);transition:transform .25s;overflow-y:auto;padding:calc(env(safe-area-inset-top,0px) + 1.25rem) 1.25rem calc(env(safe-area-inset-bottom,0px) + 1.25rem);border-left:1px solid var(--line)}
+.panel.open{transform:none}.panel-back.open{display:block}
+.panel header{display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem}
+.close{border:0;background:var(--surface-2);color:var(--ink);width:2.75rem;height:2.75rem;border-radius:50%;font-size:1.3rem}
+.opt{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:1rem 0;border-bottom:1px solid var(--line)}
+.opt .lbl{display:flex;gap:.75rem;align-items:center}
+.opt .lbl span.e{font-size:1.5rem}
+.opt .lbl b{display:block}
+.opt .lbl small{color:var(--muted)}
+.switch{position:relative;width:3.4rem;height:2rem;border-radius:999px;border:2px solid var(--ink);background:var(--surface-2);flex:none}
+.switch::after{content:"";position:absolute;top:2px;left:2px;width:1.45rem;height:1.45rem;border-radius:50%;background:var(--ink);transition:left .2s}
+.switch[aria-checked="true"]{background:var(--leaf);border-color:var(--leaf)}
+.switch[aria-checked="true"]::after{left:calc(100% - 1.45rem - 2px);background:var(--leaf-ink)}
+.stepper{display:flex;align-items:center;gap:.4rem}
+.stepper button{width:2.6rem;height:2.6rem;border-radius:10px;border:2px solid var(--ink);background:transparent;color:var(--ink);font-weight:800}
+.stepper output{min-width:3.2rem;text-align:center;font-weight:700}
+.seg{display:flex;border:2px solid var(--ink);border-radius:12px;overflow:hidden}
+.seg button{border:0;background:transparent;color:var(--ink);padding:.45rem .7rem;font-weight:700;font-size:.9rem}
+.seg button[aria-pressed="true"]{background:var(--ink);color:var(--bg)}
+.reset{margin-top:1.25rem;width:100%}
+
+/* speaking bar */
+.speakbar{position:fixed;left:50%;bottom:calc(env(safe-area-inset-bottom,0px) + 1rem);transform:translate(-50%,150%);background:var(--ink);color:var(--bg);border-radius:999px;padding:.5rem .5rem .5rem 1.2rem;display:flex;align-items:center;gap:1rem;z-index:55;transition:transform .25s;font-weight:700}
+.speakbar.show{transform:translate(-50%,0)}
+.speakbar button{border:0;background:var(--bg);color:var(--ink);border-radius:999px;padding:.5rem 1rem;font-weight:700}
+
+.toast{position:fixed;top:calc(env(safe-area-inset-top,0px) + 5rem);left:50%;transform:translateX(-50%);background:var(--leaf);color:var(--leaf-ink);padding:.7rem 1.2rem;border-radius:12px;font-weight:700;z-index:70;opacity:0;pointer-events:none;transition:opacity .2s}
+.toast.show{opacity:1}
+
+/* calm mode */
+[data-calm="on"]{--red:#B8746E;--yellow:#C9A85A;--blue:#6F93B8;--green:#79A884}
+[data-calm="on"] body{line-height:1.9;letter-spacing:.01em;word-spacing:.08em}
+[data-calm="on"] .tile.t1{--c:#9A5F59}[data-calm="on"] .tile.t2{--c:#8C7440}[data-calm="on"] .tile.t3{--c:#4F6F90}[data-calm="on"] .tile.t4{--c:#4C7A58}
+[data-calm="on"] .deco,[data-calm="on"] .reader-art{display:none}
+[data-calm="on"] .reader{grid-template-columns:1fr}
+[data-calm="on"] *{transition:none!important;animation:none!important}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+<a class="skip" href="#conteudo">Pular para o conteúdo</a>
+
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="#inicio" aria-label="ACESSA+ página inicial">
+      <svg viewBox="0 0 100 100" aria-hidden="true"><use href="#logo"/></svg>
+      ACESSA+
+    </a>
+    <nav class="main" aria-label="Principal">
+      <a href="#materias">Matérias</a>
+      <a href="#necessidades">Necessidades</a>
+      <a href="#temporizador">Temporizador</a>
+      <a href="#projeto">O projeto</a>
+    </nav>
+    <button class="a11y-btn" id="openPanel" aria-controls="panel" aria-expanded="false">⚙️ Acessibilidade</button>
+  </div>
+</header>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="logo" viewBox="0 0 100 100">
+      <!-- bulb base -->
+      <rect x="38" y="78" width="24" height="5" rx="2.5" fill="currentColor" opacity=".75"/>
+      <rect x="40" y="85" width="20" height="5" rx="2.5" fill="currentColor" opacity=".75"/>
+      <!-- left: puzzle half -->
+      <path d="M50 8 C30 8 16 23 16 41 c0 11 5 19 12 25 c4 3 6 7 6 11 h16 Z" fill="#2F7FD8"/>
+      <path d="M50 8 C36 8 25 15 20 26 h30Z" fill="#E4473C"/>
+      <path d="M16 41 c0-5 1-10 4-15 h30 v17 h-34Z" fill="#F2B620"/>
+      <path d="M50 43 v34 h-16 c0-4-2-8-6-11 c-7-6-12-14-12-25 v2Z" fill="#43A955"/>
+      <circle cx="40" cy="43" r="5" fill="#F2B620"/>
+      <circle cx="35" cy="26" r="5" fill="#E4473C"/>
+      <!-- right: leaf/brain half -->
+      <path d="M50 8 C70 8 84 23 84 41 c0 11-5 19-12 25 c-4 3-6 7-6 11 H50Z" fill="none" stroke="currentColor" stroke-width="4"/>
+      <path d="M52 64 C54 44 62 30 76 26 C74 44 66 56 52 64Z" fill="#43A955"/>
+      <path d="M53 62 L70 34" stroke="currentColor" stroke-width="2" opacity=".6"/>
+    </symbol>
+  </defs>
+</svg>
+
+<main id="conteudo">
+  <!-- HOME -->
+  <section class="hero" id="inicio">
+    <div class="wrap">
+      <div class="hero-grid">
+        <div>
+          <h1 class="wordmark" aria-label="ACESSA mais">ACESSA<span class="plus">+</span></h1>
+          <p class="tag">Uma escola acessível para todos.</p>
+          <p class="lead">Um projeto da equipe ACESSATECH: tecnologia que inclui e preserva. Estude do seu jeito, com letras maiores, texto em áudio, cores ajustáveis e pausas no tempo certo.</p>
+        </div>
+        <svg class="hero-logo deco" viewBox="0 0 100 100" role="img" aria-label="Logo ACESSATECH: uma lâmpada, metade quebra-cabeça colorido e metade folha"><use href="#logo"/></svg>
+      </div>
+
+      <nav class="tiles" aria-label="Atalhos">
+        <a class="tile t1" href="#materias"><span class="ico" aria-hidden="true">📚</span>Matérias<small>Conteúdos adaptados</small></a>
+        <a class="tile t2" href="#necessidades"><span class="ico" aria-hidden="true">🧩</span>Necessidades específicas<small>Recursos para cada estudante</small></a>
+        <a class="tile t3" href="#temporizador"><span class="ico" aria-hidden="true">⏱️</span>Temporizador<small>Estudo e pausas</small></a>
+        <a class="tile t4" href="#" data-open-panel><span class="ico" aria-hidden="true">⚙️</span>Acessibilidade<small>Ajuste o site para você</small></a>
+      </nav>
+    </div>
+  </section>
+
+  <!-- SUBJECTS -->
+  <section class="block" id="materias" aria-labelledby="mat-h">
+    <div class="wrap">
+      <h2 id="mat-h">📚 Matérias adaptadas</h2>
+      <p class="section-intro">Escolha uma matéria. Você pode ouvir o texto, mudar o tamanho das letras e trocar para a linguagem simplificada.</p>
+      <div class="subj-tabs" role="tablist" id="tabs"></div>
+      <article class="reader" id="reader" role="tabpanel" aria-live="polite"></article>
+    </div>
+  </section>
+
+  <!-- TIMER -->
+  <section class="block" id="temporizador" aria-labelledby="tim-h">
+    <div class="wrap timer-grid">
+      <div class="ring" role="timer" aria-live="off">
+        <svg viewBox="0 0 160 160" aria-hidden="true">
+          <circle class="track" cx="80" cy="80" r="70"/>
+          <circle class="prog" id="prog" cx="80" cy="80" r="70"/>
+        </svg>
+        <div class="time"><strong id="clock">25:00</strong><span id="clockLabel">Hora de estudar</span></div>
+      </div>
+      <div>
+        <h2 id="tim-h">⏱️ Temporizador de estudos</h2>
+        <p class="section-intro">Estude por um tempo, depois descanse. Pequenas pausas ajudam a manter a atenção.</p>
+        <div class="presets" role="group" aria-label="Tempo de estudo">
+          <button class="tbtn" data-min="25" aria-pressed="true">25 min</button>
+          <button class="tbtn" data-min="15" aria-pressed="false">15 min</button>
+          <button class="tbtn" data-min="10" aria-pressed="false">10 min</button>
+          <button class="tbtn" data-min="5" aria-pressed="false">Pausa 5 min</button>
+        </div>
+        <div class="controls">
+          <button class="tbtn primary" id="tStart">▶️ Começar</button>
+          <button class="tbtn" id="tPause">⏸️ Pausar</button>
+          <button class="tbtn" id="tReset">🔄 Reiniciar</button>
+        </div>
+        <div class="pause-msg" id="pauseMsg" role="status">Hora de fazer uma pausa! 💚<br><small style="font-family:'Atkinson Hyperlegible';font-weight:400;font-size:1rem">Beba água, alongue o corpo e respire fundo.</small></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- NEEDS -->
+  <section class="block" id="necessidades" aria-labelledby="nec-h">
+    <div class="wrap">
+      <h2 id="nec-h">🧠 Recursos para diferentes necessidades</h2>
+      <p class="section-intro">Cada estudante aprende de um jeito. Veja quais recursos podem ajudar e ative tudo com um toque.</p>
+      <div class="needs">
+        <div class="need" style="--c:var(--blue)">
+          <h3><span aria-hidden="true">🧩</span> Estudantes autistas</h3>
+          <ul><li>Modo de leitura tranquilo, com cores suaves</li><li>Menos elementos na tela</li><li>Rotina previsível com o temporizador</li></ul>
+          <button class="tbtn primary" data-preset="autismo">Ativar recursos</button>
+        </div>
+        <div class="need" style="--c:var(--yellow)">
+          <h3><span aria-hidden="true">⚡</span> Estudantes com TDAH</h3>
+          <ul><li>Estudo em blocos curtos de 15 minutos</li><li>Palavras importantes destacadas</li><li>Resumos em linguagem simples</li></ul>
+          <button class="tbtn primary" data-preset="tdah">Ativar recursos</button>
+        </div>
+        <div class="need" style="--c:var(--red)">
+          <h3><span aria-hidden="true">👁️</span> Estudantes com deficiência visual</h3>
+          <ul><li>Letras maiores</li><li>Alto contraste</li><li>Texto lido em voz alta</li></ul>
+          <button class="tbtn primary" data-preset="visual">Ativar recursos</button>
+        </div>
+        <div class="need" style="--c:var(--green)">
+          <h3><span aria-hidden="true">📖</span> Dificuldades de leitura</h3>
+          <ul><li>Linguagem simplificada</li><li>Mais espaço entre as linhas</li><li>Ouvir enquanto lê</li></ul>
+          <button class="tbtn primary" data-preset="leitura">Ativar recursos</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROJECT -->
+  <section class="block" id="projeto" aria-labelledby="proj-h">
+    <div class="wrap">
+      <h2 id="proj-h">Sobre o projeto ACESSATECH</h2>
+      <div class="project">
+        <div>
+          <h3>💡 O problema</h3>
+          <p>Barreiras físicas, tecnológicas e sociais ainda dificultam a participação de alunos com diferentes necessidades.</p>
+        </div>
+        <div>
+          <h3>🌱 Nossa solução</h3>
+          <p>Uma escola que une acessibilidade, tecnologia, inclusão e sustentabilidade. O ACESSA+ é a parte digital dessa escola.</p>
+        </div>
+      </div>
+      <div class="pillars">
+        <div class="pillar"><div class="ico" aria-hidden="true">♿</div><strong>Acessibilidade</strong><small>Estrutura para todos circularem</small></div>
+        <div class="pillar"><div class="ico" aria-hidden="true">💻</div><strong>Tecnologia</strong><small>Ferramentas que incluem</small></div>
+        <div class="pillar"><div class="ico" aria-hidden="true">🍎</div><strong>Inclusão</strong><small>Alimentação consciente</small></div>
+        <div class="pillar"><div class="ico" aria-hidden="true">🍃</div><strong>Sustentabilidade</strong><small>Energia solar e áreas verdes</small></div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <svg class="deco" viewBox="0 0 100 100" width="56" height="56" aria-hidden="true"><use href="#logo"/></svg>
+    <p class="motto">Mais inclusão, mais oportunidades, um futuro sustentável!</p>
+    <small>ACESSATECH · Tecnologia que inclui e preserva</small>
+  </div>
+</footer>
+
+<!-- Accessibility panel -->
+<div class="panel-back" id="panelBack"></div>
+<aside class="panel" id="panel" role="dialog" aria-modal="true" aria-labelledby="panel-h" hidden>
+  <header>
+    <h2 id="panel-h" style="font-size:1.5rem;margin:0">⚙️ Acessibilidade</h2>
+    <button class="close" id="closePanel" aria-label="Fechar">✕</button>
+  </header>
+
+  <div class="opt">
+    <div class="lbl"><span class="e" aria-hidden="true">🔠</span><div><b>Tamanho da letra</b><small>Aumente ou diminua</small></div></div>
+    <div class="stepper">
+      <button id="fsDown" aria-label="Diminuir letra">A−</button>
+      <output id="fsOut">100%</output>
+      <button id="fsUp" aria-label="Aumentar letra">A+</button>
+    </div>
+  </div>
+
+  <div class="opt">
+    <div class="lbl"><span class="e" aria-hidden="true">🔊</span><div><b>Ler a página</b><small>Ouça o conteúdo em voz alta</small></div></div>
+    <button class="tbtn" id="readPage">Ouvir</button>
+  </div>
+
+  <div class="opt">
+    <div class="lbl"><span class="e" aria-hidden="true">🎨</span><div><b>Cores</b><small>Claro, escuro ou alto contraste</small></div></div>
+    <div class="seg" role="group" aria-label="Cores">
+      <button data-color="auto" aria-pressed="true">Auto</button>
+      <button data-color="light" aria-pressed="false">Claro</button>
+      <button data-color="dark" aria-pressed="false">Escuro</button>
+      <button data-color="high" aria-pressed="false">Contraste</button>
+    </div>
+  </div>
+
+  <div class="opt">
+    <div class="lbl"><span class="e" aria-hidden="true">⏸️</span><div><b>Leitura tranquila</b><small>Cores suaves, sem animações</small></div></div>
+    <button class="switch" role="switch" aria-checked="false" id="calmSw" aria-label="Leitura tranquila"></button>
+  </div>
+
+  <div class="opt">
+    <div class="lbl"><span class="e" aria-hidden="true">📝</span><div><b>Linguagem simplificada</b><small>Textos mais curtos e fáceis</small></div></div>
+    <button class="switch" role="switch" aria-checked="false" id="simpleSw" aria-label="Linguagem simplificada"></button>
+  </div>
+
+  <button class="tbtn reset" id="resetAll">Voltar ao padrão</button>
+</aside>
+
+<div class="speakbar" id="speakbar" role="status"><span>🔊 Lendo…</span><button id="stopSpeak">Parar</button></div>
+<div class="toast" id="toast" role="status"></div>
+
+<script>
+(function(){
+  const $ = s => document.querySelector(s);
+  const $$ = s => [...document.querySelectorAll(s)];
+  const root = document.documentElement;
+
+  /* ---------- preferences ---------- */
+  const defaults = {scale:1, color:'auto', calm:false, simple:false};
+  let prefs = {...defaults};
+  try { const s = localStorage.getItem('acessa-prefs'); if (s) prefs = {...defaults, ...JSON.parse(s)}; } catch(e){}
+  function save(){ try { localStorage.setItem('acessa-prefs', JSON.stringify(prefs)); } catch(e){} }
+
+  function apply(){
+    root.style.setProperty('--scale', prefs.scale);
+    $('#fsOut').value = Math.round(prefs.scale*100)+'%';
+    root.removeAttribute('data-theme'); root.removeAttribute('data-contrast');
+    if (prefs.color==='light') root.dataset.theme='light';
+    if (prefs.color==='dark') root.dataset.theme='dark';
+    if (prefs.color==='high') root.dataset.contrast='high';
+    $$('[data-color]').forEach(b=>b.setAttribute('aria-pressed', b.dataset.color===prefs.color));
+    root.dataset.calm = prefs.calm ? 'on' : 'off';
+    $('#calmSw').setAttribute('aria-checked', prefs.calm);
+    document.body.classList.toggle('simple', prefs.simple);
+    $('#simpleSw').setAttribute('aria-checked', prefs.simple);
+    $$('[data-simple-toggle]').forEach(b=>b.setAttribute('aria-pressed', prefs.simple));
+    save();
+  }
+  function setScale(v){ prefs.scale = Math.min(1.8, Math.max(0.8, Math.round(v*10)/10)); apply(); }
+
+  function toast(msg){ const t=$('#toast'); t.textContent=msg; t.classList.add('show'); clearTimeout(t._h); t._h=setTimeout(()=>t.classList.remove('show'),2200); }
+
+  /* ---------- panel ---------- */
+  const panel=$('#panel'), back=$('#panelBack'), openBtn=$('#openPanel');
+  function openPanel(e){ if(e) e.preventDefault(); panel.hidden=false; requestAnimationFrame(()=>{panel.classList.add('open');back.classList.add('open');}); openBtn.setAttribute('aria-expanded','true'); $('#closePanel').focus(); }
+  function closePanel(){ panel.classList.remove('open'); back.classList.remove('open'); openBtn.setAttribute('aria-expanded','false'); setTimeout(()=>panel.hidden=true,250); openBtn.focus(); }
+  openBtn.onclick=openPanel; $$('[data-open-panel]').forEach(a=>a.onclick=openPanel);
+  $('#closePanel').onclick=closePanel; back.onclick=closePanel;
+  document.addEventListener('keydown',e=>{ if(e.key==='Escape' && panel.classList.contains('open')) closePanel(); });
+
+  $('#fsUp').onclick=()=>setScale(prefs.scale+0.1);
+  $('#fsDown').onclick=()=>setScale(prefs.scale-0.1);
+  $$('[data-color]').forEach(b=>b.onclick=()=>{prefs.color=b.dataset.color; apply();});
+  $('#calmSw').onclick=()=>{prefs.calm=!prefs.calm; apply();};
+  $('#simpleSw').onclick=()=>{prefs.simple=!prefs.simple; apply();};
+  $('#resetAll').onclick=()=>{prefs={...defaults}; apply(); toast('Configurações restauradas');};
+
+  /* ---------- speech ---------- */
+  const synth = window.speechSynthesis;
+  function speak(text){
+    if(!synth){ toast('Seu navegador não tem leitura em voz alta'); return; }
+    synth.cancel();
+    const u = new SpeechSynthesisUtterance(text.replace(/\s+/g,' '));
+    u.lang='pt-BR'; u.rate = prefs.calm ? 0.85 : 0.95;
+    const v = synth.getVoices().find(v=>/pt[-_]BR/i.test(v.lang)) || synth.getVoices().find(v=>/^pt/i.test(v.lang));
+    if(v) u.voice=v;
+    u.onend=u.onerror=()=>$('#speakbar').classList.remove('show');
+    $('#speakbar').classList.add('show');
+    synth.speak(u);
+  }
+  function visibleText(el){ return el.innerText; }
+  $('#stopSpeak').onclick=()=>{ synth && synth.cancel(); $('#speakbar').classList.remove('show'); };
+  $('#readPage').onclick=()=>{ closePanel(); speak(visibleText($('#conteudo'))); };
+
+  /* ---------- subjects ---------- */
+  const art = {
+    mat:`<svg viewBox="0 0 200 200" role="img" aria-label="Uma pizza dividida em 4 pedaços, com 1 pedaço destacado"><circle cx="100" cy="100" r="80" fill="#F2B620"/><circle cx="100" cy="100" r="68" fill="#F7D56A"/><path d="M100 100 L100 20 A80 80 0 0 1 180 100Z" fill="#E4473C"/><line x1="100" y1="20" x2="100" y2="180" stroke="#7a4a00" stroke-width="4"/><line x1="20" y1="100" x2="180" y2="100" stroke="#7a4a00" stroke-width="4"/><circle cx="70" cy="70" r="8" fill="#C9382E"/><circle cx="72" cy="135" r="8" fill="#C9382E"/><circle cx="135" cy="138" r="8" fill="#C9382E"/><text x="140" y="68" font-family="Lexend" font-weight="800" font-size="26" fill="#fff" text-anchor="middle">1/4</text></svg>`,
+    his:`<svg viewBox="0 0 200 200" role="img" aria-label="Linha do tempo com o ano de 1822 destacado"><rect x="20" y="96" width="160" height="8" rx="4" fill="#2F7FD8"/><circle cx="45" cy="100" r="12" fill="#fff" stroke="#2F7FD8" stroke-width="6"/><circle cx="155" cy="100" r="12" fill="#fff" stroke="#2F7FD8" stroke-width="6"/><circle cx="100" cy="100" r="22" fill="#43A955"/><path d="M100 84 L116 100 L100 116 L84 100Z" fill="#F2B620"/><circle cx="100" cy="100" r="6" fill="#2F7FD8"/><text x="100" y="152" font-family="Lexend" font-weight="800" font-size="24" fill="currentColor" text-anchor="middle">1822</text><text x="45" y="76" font-family="Lexend" font-size="14" fill="currentColor" text-anchor="middle">1500</text><text x="155" y="76" font-family="Lexend" font-size="14" fill="currentColor" text-anchor="middle">1889</text></svg>`,
+    cie:`<svg viewBox="0 0 200 200" role="img" aria-label="Uma planta recebendo luz do sol"><circle cx="150" cy="45" r="24" fill="#F2B620"/><g stroke="#F2B620" stroke-width="5" stroke-linecap="round"><line x1="150" y1="8" x2="150" y2="14"/><line x1="187" y1="45" x2="181" y2="45"/><line x1="176" y1="19" x2="171" y2="24"/><line x1="124" y1="19" x2="129" y2="24"/></g><path d="M128 66 L108 92" stroke="#F2B620" stroke-width="4" stroke-dasharray="6 6"/><rect x="60" y="150" width="70" height="36" rx="6" fill="#B06A3B"/><path d="M95 150 V95" stroke="#2C8540" stroke-width="6"/><path d="M95 120 C70 120 58 104 58 88 C78 88 95 100 95 120Z" fill="#43A955"/><path d="M95 105 C120 105 132 88 132 72 C112 72 95 84 95 105Z" fill="#43A955"/></svg>`,
+    geo:`<svg viewBox="0 0 200 200" role="img" aria-label="Ciclo da água: sol, nuvem, chuva e rio"><circle cx="40" cy="40" r="20" fill="#F2B620"/><ellipse cx="130" cy="50" rx="42" ry="22" fill="#9FB8CF"/><circle cx="110" cy="42" r="20" fill="#9FB8CF"/><g fill="#2F7FD8"><path d="M110 88 q5 10 0 14 q-5-4 0-14Z"/><path d="M135 96 q5 10 0 14 q-5-4 0-14Z"/><path d="M155 84 q5 10 0 14 q-5-4 0-14Z"/></g><path d="M10 170 C50 150 90 185 130 165 S190 160 190 160 V200 H10Z" fill="#2F7FD8"/><path d="M60 150 C60 120 70 100 90 80" stroke="currentColor" stroke-width="3" fill="none" stroke-dasharray="5 6"/><path d="M84 78 l8 0 l-2 8" stroke="currentColor" stroke-width="3" fill="none"/></svg>`
+  };
+  const subjects = [
+    {id:'mat', ico:'➗', name:'Matemática', topic:'Frações',
+     full:`<p>Uma <mark>fração</mark> representa uma parte de um todo que foi dividido em partes iguais.</p><p>O número de baixo é o <mark>denominador</mark>: ele mostra em quantas partes o todo foi dividido. O número de cima é o <mark>numerador</mark>: ele mostra quantas partes estamos usando.</p><p>Se uma pizza foi cortada em 4 pedaços iguais e você comeu 1, você comeu <mark>1/4</mark> (um quarto) da pizza.</p>`,
+     simple:`<p><mark>Fração</mark> é um pedaço de uma coisa inteira.</p><p>A pizza tem 4 pedaços. Você comeu 1.</p><p>Você comeu <mark>1/4</mark> da pizza.</p>`,
+     words:['fração','numerador','denominador']},
+    {id:'his', ico:'🏛️', name:'História', topic:'Independência do Brasil',
+     full:`<p>Durante mais de 300 anos, o Brasil foi uma <mark>colônia</mark> de Portugal. Isso quer dizer que as decisões importantes eram tomadas pelos portugueses.</p><p>Em <mark>7 de setembro de 1822</mark>, Dom Pedro declarou a <mark>independência</mark> do Brasil, às margens do riacho Ipiranga, em São Paulo.</p><p>A partir daí, o Brasil passou a ser um país independente, governado como um império.</p>`,
+     simple:`<p>Antes, o Brasil era mandado por Portugal.</p><p>No dia <mark>7 de setembro de 1822</mark>, o Brasil ficou <mark>independente</mark>.</p><p>Por isso, esse dia é feriado.</p>`,
+     words:['colônia','independência','1822']},
+    {id:'cie', ico:'🌱', name:'Ciências', topic:'Fotossíntese',
+     full:`<p>A <mark>fotossíntese</mark> é o processo que as plantas usam para produzir o próprio alimento.</p><p>Para isso, elas precisam de <mark>luz do sol</mark>, <mark>água</mark> e <mark>gás carbônico</mark>, que vem do ar. As folhas têm um pigmento verde chamado <mark>clorofila</mark>, que captura a luz.</p><p>No final, a planta produz açúcar para crescer e libera <mark>oxigênio</mark>, que nós respiramos.</p>`,
+     simple:`<p>As plantas fazem a própria comida.</p><p>Elas usam <mark>sol</mark>, <mark>água</mark> e ar.</p><p>Depois, soltam <mark>oxigênio</mark>. Nós respiramos esse oxigênio.</p>`,
+     words:['fotossíntese','clorofila','oxigênio']},
+    {id:'geo', ico:'💧', name:'Geografia', topic:'Ciclo da água',
+     full:`<p>A água da Terra está sempre se movendo, em um caminho chamado <mark>ciclo da água</mark>.</p><p>O calor do sol faz a água de rios e mares <mark>evaporar</mark> e subir como vapor. No alto, o vapor esfria e forma as nuvens: isso é a <mark>condensação</mark>.</p><p>Quando as nuvens ficam pesadas, a água cai como chuva. Essa é a <mark>precipitação</mark>. A água volta para os rios, e o ciclo começa de novo.</p>`,
+     simple:`<p>O sol esquenta a água. A água sobe para o céu.</p><p>Lá em cima, ela vira <mark>nuvem</mark>.</p><p>A nuvem fica pesada e vira <mark>chuva</mark>. A água volta para o rio.</p>`,
+     words:['evaporação','condensação','precipitação']}
+  ];
+  let current = subjects[0].id;
+  const tabs=$('#tabs'), reader=$('#reader');
+  subjects.forEach(s=>{
+    const b=document.createElement('button');
+    b.className='subj-tab'; b.role='tab'; b.id='tab-'+s.id;
+    b.innerHTML=`<span aria-hidden="true">${s.ico}</span>${s.name}`;
+    b.onclick=()=>{ current=s.id; renderSubject(); };
+    tabs.appendChild(b);
+  });
+  tabs.addEventListener('keydown',e=>{
+    if(!['ArrowRight','ArrowLeft'].includes(e.key)) return;
+    const i=subjects.findIndex(s=>s.id===current);
+    const n=(i+(e.key==='ArrowRight'?1:-1)+subjects.length)%subjects.length;
+    current=subjects[n].id; renderSubject(); $('#tab-'+current).focus();
+  });
+  function renderSubject(){
+    const s=subjects.find(x=>x.id===current);
+    $$('.subj-tab').forEach(t=>{const on=t.id==='tab-'+current; t.setAttribute('aria-selected',on); t.tabIndex=on?0:-1;});
+    reader.setAttribute('aria-labelledby','tab-'+current);
+    reader.innerHTML=`
+      <div class="reader-body">
+        <div class="topic">${s.name}</div>
+        <h3>${s.topic}</h3>
+        <div class="reader-text" id="readerText">
+          <div class="v-full">${s.full}</div>
+          <div class="v-simple">${s.simple}</div>
+        </div>
+        <p style="margin:1rem 0 .3rem;font-weight:700">Palavras importantes</p>
+        <ul class="words">${s.words.map(w=>`<li>${w}</li>`).join('')}</ul>
+        <div class="toolbar">
+          <button class="tbtn primary" id="listen">🔊 Ouvir texto</button>
+          <button class="tbtn" data-fs="-1" aria-label="Diminuir letra">A−</button>
+          <button class="tbtn" data-fs="1" aria-label="Aumentar letra">A+</button>
+          <button class="tbtn" data-simple-toggle aria-pressed="${prefs.simple}">📝 Linguagem simples</button>
+        </div>
+      </div>
+      <div class="reader-art">${art[s.id]}</div>`;
+    $('#listen').onclick=()=>{
+      const box = $('#readerText').querySelector(prefs.simple?'.v-simple':'.v-full');
+      speak(s.topic+'. '+box.innerText);
+    };
+    reader.querySelectorAll('[data-fs]').forEach(b=>b.onclick=()=>setScale(prefs.scale+0.1*Number(b.dataset.fs)));
+    reader.querySelector('[data-simple-toggle]').onclick=()=>{prefs.simple=!prefs.simple; apply();};
+  }
+  renderSubject();
+
+  /* ---------- timer ---------- */
+  const C = 2*Math.PI*70, prog=$('#prog');
+  prog.style.strokeDasharray=C;
+  let total=25*60, left=total, tick=null, isBreak=false;
+  function draw(){
+    const m=String(Math.floor(left/60)).padStart(2,'0'), s=String(left%60).padStart(2,'0');
+    $('#clock').textContent=`${m}:${s}`;
+    prog.style.strokeDashoffset = C*(1-left/total);
+    document.title = tick ? `${m}:${s} · ACESSA+` : 'ACESSA+ | Uma escola acessível para todos';
+  }
+  function chime(){
+    try{
+      const ctx=new (window.AudioContext||window.webkitAudioContext)();
+      [523.25,659.25,783.99].forEach((f,i)=>{
+        const o=ctx.createOscillator(), g=ctx.createGain();
+        o.frequency.value=f; o.type='sine';
+        g.gain.setValueAtTime(0.0001,ctx.currentTime+i*.25);
+        g.gain.exponentialRampToValueAtTime(0.25,ctx.currentTime+i*.25+.05);
+        g.gain.exponentialRampToValueAtTime(0.0001,ctx.currentTime+i*.25+.8);
+        o.connect(g).connect(ctx.destination); o.start(ctx.currentTime+i*.25); o.stop(ctx.currentTime+i*.25+.9);
+      });
+    }catch(e){}
+  }
+  function stop(){ clearInterval(tick); tick=null; }
+  function finish(){
+    stop(); left=0; draw(); chime();
+    if(isBreak){ $('#clockLabel').textContent='Pausa terminada'; toast('Pausa terminada! Bora estudar 📚'); }
+    else { $('#pauseMsg').classList.add('show'); $('#clockLabel').textContent='Hora da pausa'; speak('Hora de fazer uma pausa!'); }
+  }
+  $('#tStart').onclick=()=>{
+    if(tick) return;
+    if(left<=0) left=total;
+    $('#pauseMsg').classList.remove('show');
+    $('#clockLabel').textContent = isBreak ? 'Descansando' : 'Estudando…';
+    tick=setInterval(()=>{ left--; draw(); if(left<=0) finish(); },1000);
+    draw();
+  };
+  $('#tPause').onclick=()=>{ if(tick){ stop(); $('#clockLabel').textContent='Pausado'; draw(); } };
+  $('#tReset').onclick=()=>{ stop(); left=total; $('#pauseMsg').classList.remove('show'); $('#clockLabel').textContent=isBreak?'Hora da pausa':'Hora de estudar'; draw(); };
+  function setMinutes(min){
+    stop(); total=min*60; left=total; isBreak = (min===5);
+    $$('[data-min]').forEach(b=>b.setAttribute('aria-pressed', Number(b.dataset.min)===min));
+    $('#pauseMsg').classList.remove('show');
+    $('#clockLabel').textContent=isBreak?'Hora da pausa':'Hora de estudar';
+    draw();
+  }
+  $$('[data-min]').forEach(b=>b.onclick=()=>setMinutes(Number(b.dataset.min)));
+  draw();
+
+  /* ---------- needs presets ---------- */
+  const presets = {
+    autismo:()=>{ prefs.calm=true; apply(); toast('Leitura tranquila ativada 💙'); },
+    tdah:()=>{ prefs.simple=true; apply(); setMinutes(15); toast('Linguagem simples + timer de 15 min'); location.hash='#temporizador'; },
+    visual:()=>{ prefs.scale=Math.max(prefs.scale,1.3); prefs.color='high'; apply(); toast('Letras maiores + alto contraste'); speak('Letras maiores e alto contraste ativados. Use o botão Ouvir texto nas matérias.'); },
+    leitura:()=>{ prefs.simple=true; prefs.calm=true; apply(); toast('Linguagem simples + mais espaço'); location.hash='#materias'; }
+  };
+  $$('[data-preset]').forEach(b=>b.onclick=()=>presets[b.dataset.preset]());
+
+  if(synth && synth.onvoiceschanged!==undefined) synth.onvoiceschanged=()=>{};
+  apply();
+})();
+</script>
+</body>
+</html>
